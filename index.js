@@ -1,5 +1,5 @@
 const cv = require('opencv')
-const camera = new cv.VideoCapture(0);
+const camera = new cv.VideoCapture(0)
 
 const classifiers = {
   face: './classifiers/face.xml',
@@ -12,10 +12,10 @@ const classifiers = {
 }
 
 const detect = function(err, im) {
-  if (err) throw err;
+  if (err) throw err
 
   im.detectObject(classifiers.face, {}, function(err, detectedObjects) {
-    if (err) throw err;
+    if (err) throw err
 
     // draw circles around any detected objects in the picture
     detectedObjects.forEach(detectedObject => {
@@ -26,17 +26,15 @@ const detect = function(err, im) {
       )
     })
 
-    if (detectedObject.length) {
+    if (detectedObjects.length) {
       console.log(`tracking ${detectedObjects.length} object(s)`)
-      im.save(`./screencaps/${Date.now()}.png`);
+      im.save(`./screencaps/${Date.now()}.png`)
     }
-  });
-});
+  })
+}
 
 // read and detect input from camera every second
-setInterval(function() {
-  camera.read(detect);
-}, 1000)
+setInterval(() => camera.read(detect), 1000)
 
 // example: read input from an image
 // cv.readImage('./hotdog.jpg', detect)
